@@ -1,0 +1,80 @@
+{
+  "name": "cyou.4uss.app",
+  "productName": "Browser Discord Status",
+  "version": "1.0.0",
+  "description": "This is just a socket for browser extension called Browser Discord Status",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "build-installer": "electron-builder"
+  },
+  "build": {
+    "appId": "cyou.4uss.app",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/assets/img/ico.ico"
+    },
+    "nsis": {
+      "installerIcon": "src/assets/img/ico.ico",
+      "uninstallerIcon": "src/assets/img/ico.ico",
+      "uninstallDisplayName": "Browser Discord Status",
+      "license": "src/assets/license.txt",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "keywords": [],
+  "author": "3xanax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anKordii/Browser-Discord-Status/issues"
+  },
+  "homepage": "https://github.com/anKordii/Browser-Discord-Status#readme",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "cyou.4uss.app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "discord-rich-presence": "0.0.8",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "electron": "11.2.0"
+  }
+}
