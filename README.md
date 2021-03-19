@@ -7,7 +7,9 @@ If you are looking for an custom discord status which display what are u doing o
  - Requires Windows 7 SP1 64 Bit or higher
  
  The Installer is available [HERE](https://github.com/anKordii/Browser-Discord-Status/releases)
+ 
  The Extension is available [HERE](https://chrome.google.com/webstore/detail/aklnceehjhihdljbcajhdiehaphlafjl)
+ 
  GUIDE [HERE](https://4uss.cyou/chrome-discord)
 
 # Support & Issues
