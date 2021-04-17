@@ -9,7 +9,7 @@
       },
       "default_popup": "popup.html"
    },
-   "description": "Display in discord status what are u doing in browser.",
+   "description": "Show to your friends what you are doing in browser.",
    "icons": {
       "128": "icons/128.png",
       "48": "icons/48.png"
@@ -17,5 +17,5 @@
    "manifest_version": 2,
    "name": "Browser Discord Status",
    "permissions": [ "tabs", "notifications" ],
-   "version": "1.0"
+   "version": "1.0.1"
 }

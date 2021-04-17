@@ -3,6 +3,14 @@ If you are looking for an custom discord status which display what are u doing o
 
 ![preview](https://i.imgur.com/qSb1UEK.png)
 
+# Links
+
+[How to install](https://4uss.cyou/chrome-discord)
+
+[Suggest integration](https://4uss.cyou/propozycje)
+
+[Supported sites](https://4uss.cyou/discord-list)
+
 # Download & Requirements
  - Requires Windows 7 SP1 64 Bit or higher
  
