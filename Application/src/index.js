@@ -15,8 +15,7 @@ var lastTitle = 'unset';
 var lastUrl = 'unset';
 var socketStatus = 1;
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
@@ -121,21 +120,13 @@ const createWindow = () => {
 
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 });
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
@@ -144,15 +135,13 @@ app.on('activate', () => {
 discord.updatePresence({
   details: 'Przeglądanie internetu',
   startTimestamp: Date.now(),
-  largeImageKey: 'chrome',
+  largeImageKey: 'global',
   largeImageText: 'google.com',
   smallImageKey: 'download',
-  smallImageText: 'www.4uss.cyou/chrome-discord',
+  smallImageText: '4uss.cyou/chrome-discord',
   instance: true,
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
 io.on('connection', function (socket) {
   var $ipAddress = socket.handshake.headers['x-forwarded-for'];
 
@@ -168,19 +157,19 @@ io.on('connection', function (socket) {
   /* Przyjmowanie*/
   socket.on('ussDiscordActive', (data) => {
 
-    chromeStatusRPC(data.url, data.title)
+    chromeStatusRPC(data.url, data.title, data.notSuppoerted)
   
   });
 
   socket.on('ussDiscordUpdate', (data) => {
 
-    chromeStatusRPC(data.url, data.title)
+    chromeStatusRPC(data.url, data.title, data.notSuppoerted)
   
   });
 
   socket.on('requestedDataChrome', (data) => {
 
-    if(data.title != lastTitle || data.url != lastUrl) return chromeStatusRPC(data.url, data.title);
+    if(data.title != lastTitle || data.url != lastUrl) return chromeStatusRPC(data.url, data.title, data.notSuppoerted);
 
   });
 
@@ -191,7 +180,7 @@ io.on('connection', function (socket) {
 
 });
 
-function chromeStatusRPC(url, title){
+function chromeStatusRPC(url, title, notSuppoerted){
 
   if(socketStatus === 0) return;
 
@@ -211,13 +200,14 @@ function chromeStatusRPC(url, title){
       if(res.statusCode === 200){
         customChromeStatusRPC(ussModificated, data[0].name, data[0].image)
       }else{
+        if(notSuppoerted === 'true') return;
         discord.updatePresence({
           details: ussModificated,
           startTimestamp: Date.now(),
-          largeImageKey: 'chrome',
+          largeImageKey: 'global',
           largeImageText: ussModificatedU,
           smallImageKey: 'download',
-          smallImageText: 'www.4uss.cyou/chrome-discord',
+          smallImageText: '4uss.cyou/chrome-discord',
           instance: true,
         })
       }
@@ -236,7 +226,7 @@ function customChromeStatusRPC(title, name, image){
     largeImageKey: image,
     largeImageText: name,
     smallImageKey: 'download',
-    smallImageText: 'www.4uss.cyou/chrome-discord',
+    smallImageText: '4uss.cyou/chrome-discord',
     instance: true,
   });
 }

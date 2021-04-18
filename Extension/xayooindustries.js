@@ -6,18 +6,18 @@ if(!localStorage.disableGoogle){localStorage.disableGoogle = false;};
 // 👇 Powiadomienie o zainstalowaniu dodatku
 if(!localStorage.firstInstalll){ localStorage.firstInstalll = 'none'};
 // 👇 Not connected
-chrome.browserAction.setBadgeBackgroundColor({ color: "#b30b2f" }); chrome.browserAction.setBadgeText({ text: "Offline" })
+chrome.browserAction.setBadgeBackgroundColor({ color: "#b30b2f" }); chrome.browserAction.setBadgeText({ text: "OFF" })
 
 
 socket.on('connect', function(){
     alercik('Connected to the server');
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#00bd8a" })
-    chrome.browserAction.setBadgeText({ text: "Online" })
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#006b1e" })
+    chrome.browserAction.setBadgeText({ text: "ON" })
 });
 socket.on('disconnect', function () {
     alercik('Server connection lost');
     chrome.browserAction.setBadgeBackgroundColor({ color: "#b30b2f" })
-    chrome.browserAction.setBadgeText({ text: "Offline" })
+    chrome.browserAction.setBadgeText({ text: "OFF" })
 });
 socket.on("currentData", function(){
 
@@ -34,11 +34,10 @@ chrome.tabs.onActivated.addListener( function(activeInfo){
 
         if (!y || ['chrome://', 'about://'].some(p => y.startsWith(p))) return;
         if (!y || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => y.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
-        //if(!y || getStatus(y) == 'blocked' && localStorage.getItem(`disableNot`) === 'true') return;
-
         socket.emit("ussDiscordActive", {
             url: y,
-            title: tab.title
+            title: tab.title,
+            notSuppoerted: localStorage.disableNot
         });
 
     });
@@ -48,13 +47,13 @@ chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
 
     if (!change.url || ['chrome://', 'about://'].some(p => change.url.startsWith(p))) return;
     if (!change.url || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => change.url.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
-    //if (!change.url || getStatus(change.url) == 'blocked' && localStorage.getItem(`disableNot`) === 'true') return;
 
     if (tab.active && change.url) {
         
         socket.emit("ussDiscordUpdate", {
             url: change.url,
-            title: tab.title
+            title: tab.title,
+            notSuppoerted: localStorage.disableNot
         });         
     }
 });
@@ -64,11 +63,11 @@ function currentPageData(){
 
         if (!tab.url || ['chrome://', 'about://'].some(p => tab.url.startsWith(p))) return;
         if (!tab.url || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => tab.url.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
-        //if(!tab.url || getStatus(tab.url) == 'blocked' && localStorage.getItem(`disableNot`) === 'true') return;
 
         socket.emit("requestedDataChrome", {
             url: tab.url,
-            title: tab.title
+            title: tab.title,
+            notSuppoerted: localStorage.disableNot
         });
     });
 }
@@ -80,13 +79,3 @@ if (localStorage.firstInstalll == "none") {
     chrome.notifications.create({ message: `Thank you for installing the Browser Discord Status extension. You will display what are u doing in browser on discord.`, contextMessage: "You can controll your status via extension settings and external app.", title: "Welcome to Browser Discord Status", type: "basic", iconUrl: "../../icons/128.png" }, function () { });
     localStorage.setItem('firstInstalll', 'disable');
 }
-/*async function getStatus(url){
-    const chars = url.split('/');
-    let data = await fetch(`https://api.4uss.cyou/usslist.php?url=${chars[2]}`)
-    .then(function(response) {
-        if(response.status === 404){
-            return response.status;
-        }
-    });
-    return data;
-}*/

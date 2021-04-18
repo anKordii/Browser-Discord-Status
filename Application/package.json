@@ -1,7 +1,7 @@
 {
   "name": "cyou.4uss.app",
   "productName": "Browser Discord Status",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is just a socket for browser extension called Browser Discord Status",
   "main": "src/index.js",
   "scripts": {
