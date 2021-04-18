@@ -77,7 +77,7 @@ function alercik(title){
     chrome.notifications.create({ message: title, title: "Browser Discord Status", type: "basic", iconUrl: "icons/128.png" }, function () { });
 }
 if (localStorage.firstInstalll == "none") {
-    chrome.notifications.create({ message: `Dzięki za zainstalowanie dodatku XayooIndustries Powiadomienia. Będziesz na bieżąco informowany o każdym streamie.`, contextMessage: "Możesz to zmienić klikając lewym przyciskiem na ikone dodatku.", title: "Witaj w Xayoo Industries", type: "basic", iconUrl: "../../icons/128.png" }, function () { });
+    chrome.notifications.create({ message: `Thank you for installing the Browser Discord Status extension. You will display what are u doing in browser on discord.`, contextMessage: "You can controll your status via extension settings and external app.", title: "Welcome to Browser Discord Status", type: "basic", iconUrl: "../../icons/128.png" }, function () { });
     localStorage.setItem('firstInstalll', 'disable');
 }
 /*async function getStatus(url){
