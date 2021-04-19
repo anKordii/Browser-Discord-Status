@@ -3,6 +3,7 @@ socket = io.connect("ws://localhost:7777")
 var lastInitLogin = 0;
 if(!localStorage.disableNot){localStorage.disableNot = false;};
 if(!localStorage.disableGoogle){localStorage.disableGoogle = false;};
+if(!localStorage.disableBing){localStorage.disableBing = false;};
 // 👇 Powiadomienie o zainstalowaniu dodatku
 if(!localStorage.firstInstalll){ localStorage.firstInstalll = 'none'};
 // 👇 Not connected
@@ -32,8 +33,9 @@ chrome.tabs.onActivated.addListener( function(activeInfo){
     chrome.tabs.get(activeInfo.tabId, function(tab){
         y = tab.url;
 
-        if (!y || ['chrome://', 'about://'].some(p => y.startsWith(p))) return;
+        if (!y || ['chrome://', 'about://', 'edge://'].some(p => y.startsWith(p))) return;
         if (!y || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => y.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
+        if (!y || ['https://www.bing.com', 'https://bing.com', 'http://www.bing.com', 'http://bing.com'].some(p => y.startsWith(p) && localStorage.getItem(`disableBing`) === 'true')) return;
         socket.emit("ussDiscordActive", {
             url: y,
             title: tab.title,
@@ -45,8 +47,9 @@ chrome.tabs.onActivated.addListener( function(activeInfo){
 
 chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
 
-    if (!change.url || ['chrome://', 'about://'].some(p => change.url.startsWith(p))) return;
+    if (!change.url || ['chrome://', 'about://', 'edge://'].some(p => change.url.startsWith(p))) return;
     if (!change.url || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => change.url.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
+    if (!change.url || ['https://www.bing.com', 'https://bing.com', 'http://www.bing.com', 'http://bing.com'].some(p => change.url.startsWith(p) && localStorage.getItem(`disableBing`) === 'true')) return;
 
     if (tab.active && change.url) {
         
@@ -61,8 +64,9 @@ chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
 function currentPageData(){
     chrome.tabs.getSelected(null, function(tab) {
 
-        if (!tab.url || ['chrome://', 'about://'].some(p => tab.url.startsWith(p))) return;
+        if (!tab.url || ['chrome://', 'about://', 'edge://'].some(p => tab.url.startsWith(p))) return;
         if (!tab.url || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => tab.url.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
+        if (!tab.url || ['https://www.bing.com', 'https://bing.com', 'http://www.bing.com', 'http://bing.com'].some(p => tab.url.startsWith(p) && localStorage.getItem(`disableBing`) === 'true')) return;
 
         socket.emit("requestedDataChrome", {
             url: tab.url,
