@@ -20,6 +20,8 @@ If you are looking for an custom discord status which display what are u doing o
 
  The Extension is available [EDGE](https://microsoftedge.microsoft.com/addons/detail/ljacogdbogpkjdjncafpahdbmokghdjd)
  
+The Extension is available [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/browser-discord-status/)
+
  GUIDE [HERE](https://4uss.cyou/chrome-discord)
 
 # Support & Issues
