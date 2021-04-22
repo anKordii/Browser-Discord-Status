@@ -7,6 +7,8 @@ If you are looking for an custom discord status which display what are u doing o
 
 [How to install](https://4uss.cyou/chrome-discord)
 
+[YouTube Video](https://youtu.be/73wUaWiLA5I)
+
 [Suggest integration](https://4uss.cyou/propozycje)
 
 [Supported sites](https://4uss.cyou/discord-list)
