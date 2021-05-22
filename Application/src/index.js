@@ -1,15 +1,11 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
 const https = require('https')
-
 const express = require('express');
 const appS = express();
 const server = appS.listen(7777);
 var io = require('socket.io')(server);
-
 const discord = require('discord-rich-presence')('821703708244312065');
-
-var $ipsConnected = [];
 
 var lastTitle = 'unset';
 var lastUrl = 'unset';
@@ -48,13 +44,13 @@ const createWindow = () => {
   ipcMain.on('disable-socket', (event, arg) => {
     socketStatus = 0;
 
-    statuslog('<b class="badus">Server has been disabled</b>')
+    statuslog('<b class="badus">Status has been paused</b>')
   })
 
   ipcMain.on('enable-socket', (event, arg) => {
     socketStatus = 1;
 
-    statuslog('<b class="goodus">Server has been enabled</b>')
+    statuslog('<b class="goodus">Status has been unpaused</b>')
   })
 
   mainWindow.on('minimize', function (event) {
@@ -77,7 +73,7 @@ const createWindow = () => {
             enabled: false
         },
         {
-            label: 'Main Page', click: function () {
+            label: 'Application', click: function () {
                 mainWindow.show();
             }
         },
@@ -102,9 +98,8 @@ const createWindow = () => {
   
       res.on('data', d => {
         var data = JSON.parse(d)
-
           if(data.browserdiscordstatus != `${app.getVersion()}`){
-            mainWindow.webContents.send('outdated', 'New update is available to download');
+            mainWindow.webContents.send('outdated', 'New update is available to download from GitHub');
           }
       })
     })
@@ -113,11 +108,9 @@ const createWindow = () => {
   setInterval(() => {
     checkisoutdated()
   }, 60 * 1000);
+  checkisoutdated();
 
-  function statuslog(message){
-    mainWindow.webContents.send('statusDownload', message);
-  }
-
+  function statuslog(message){mainWindow.webContents.send('statusDownload', message);}
 };
 
 app.on('ready', createWindow);
@@ -133,27 +126,18 @@ app.on('activate', () => {
 });
 
 discord.updatePresence({
-  details: 'Przeglądanie internetu',
+  details: 'Browser Discord Status',
+  state: 'Idle',
   startTimestamp: Date.now(),
   largeImageKey: 'global',
-  largeImageText: 'google.com',
-  smallImageKey: 'download',
-  smallImageText: '4uss.cyou/chrome-discord',
+  largeImageText: 'Idle',
   instance: true,
+  buttons: [
+    { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+  ]
 })
 
 io.on('connection', function (socket) {
-  var $ipAddress = socket.handshake.headers['x-forwarded-for'];
-
-  if (!$ipsConnected.hasOwnProperty($ipAddress)) {
-      $ipsConnected[$ipAddress] = 1;
-  }
-  /* Disconnect socket */
-  socket.on('disconnect', function() {
-      if ($ipsConnected.hasOwnProperty($ipAddress)) {
-          delete $ipsConnected[$ipAddress];
-      }
-  });
   /* Przyjmowanie*/
   socket.on('ussDiscordActive', (data) => {
 
@@ -173,10 +157,7 @@ io.on('connection', function (socket) {
 
   });
 
-  setInterval(() => {
-    socket.emit('currentData');
-
-  }, 30 * 1000);
+  setInterval(() => {socket.emit('currentData');}, 30 * 1000);
 
 });
 
@@ -194,11 +175,14 @@ function chromeStatusRPC(url, title, notSuppoerted){
   const req = https.request({hostname: 'api.4uss.cyou', port: 443, path: `/usslist.php?url=${chars[2]}`,method: 'GET'}, res => {
   
     res.on('data', d => {
-
       var data = JSON.parse(d);
 
       if(res.statusCode === 200){
-        customChromeStatusRPC(ussModificated, data[0].name, data[0].image)
+        if(data[0].special === 'yes'){
+          specialChromeStatusRPC(ussModificated, data[0].name, data[0].image, data[0].special_button, url)
+        }else{
+          customChromeStatusRPC(ussModificated, data[0].name, data[0].image)
+        }
       }else{
         if(notSuppoerted === 'true') return;
         discord.updatePresence({
@@ -206,9 +190,10 @@ function chromeStatusRPC(url, title, notSuppoerted){
           startTimestamp: Date.now(),
           largeImageKey: 'global',
           largeImageText: ussModificatedU,
-          smallImageKey: 'download',
-          smallImageText: '4uss.cyou/chrome-discord',
           instance: true,
+          buttons: [
+            { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+          ]
         })
       }
 
@@ -219,14 +204,46 @@ function chromeStatusRPC(url, title, notSuppoerted){
   })
   req.end()
 }
+function specialChromeStatusRPC(title, name, image, buttonS, urlS){
+  const chars = urlS.split('/');
+  if(chars[2] === 'netflix.com' || chars[2] === 'www.netflix.com' ){
+    discord.updatePresence({
+      state: title,
+      startTimestamp: Date.now(),
+      largeImageKey: image,
+      largeImageText: name,
+      smallImageKey: 'playbutton',
+      instance: true,
+      buttons: [
+        { label: buttonS, url: urlS.replace(/\?.*$/g,"")},
+        { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+      ]
+    });
+  }else{
+    discord.updatePresence({
+      details: name,
+      state: title,
+      startTimestamp: Date.now(),
+      largeImageKey: image,
+      largeImageText: name,
+      instance: true,
+      buttons: [
+        { label: buttonS, url: urlS},
+        { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+      ]
+    });
+  }
+}
 function customChromeStatusRPC(title, name, image){
-  discord.updatePresence({
-    details: title,
-    startTimestamp: Date.now(),
-    largeImageKey: image,
-    largeImageText: name,
-    smallImageKey: 'download',
-    smallImageText: '4uss.cyou/chrome-discord',
-    instance: true,
-  });
+    discord.updatePresence({
+      details: name,
+      state: title,
+      startTimestamp: Date.now(),
+      largeImageKey: image,
+      largeImageText: name,
+      instance: true,
+      buttons: [
+        { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+      ]
+    });
 }
