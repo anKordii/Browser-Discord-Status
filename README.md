@@ -25,8 +25,6 @@ Report bug or submit ideas
  
  Firefox Web store [addons.mozilla.org/addon/browser-discord-status/](https://addons.mozilla.org/addon/browser-discord-status/)
 
- GUIDE [HERE](https://4uss.cyou/chrome-discord)
-
 # Support & Issues
 <b>IMPORTANT</b>: Help me beeing efficient, please! I am developing Browser Discord Status in my free time for no money. Contribute to the project by posting complete, structured and helpful issues which I can reproduce quickly without asking for missing information.
 
