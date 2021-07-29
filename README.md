@@ -5,31 +5,32 @@ If you are looking for an custom discord status which display what are u doing o
 
 # Links
 
-[How to install](https://4uss.cyou/chrome-discord)
+YouTube Tutorial
+[youtu.be/73wUaWiLA5I](https://youtu.be/73wUaWiLA5I)
 
-[YouTube Video](https://youtu.be/73wUaWiLA5I)
+Supported Sites
+[4uss.cyou/discord-list](https://4uss.cyou/discord-list)
 
-[Suggest integration](https://4uss.cyou/propozycje)
-
-[Supported sites](https://4uss.cyou/discord-list)
+Report bug or submit ideas
+[Github.com/anKordii/Browser-Discord-Status/issues](https://github.com/anKordii/Browser-Discord-Status/issues)
 
 # Download & Requirements
  - Requires Windows 7 SP1 64 Bit or higher
  
- The Installer is available [HERE](https://github.com/anKordii/Browser-Discord-Status/releases)
+ The Installer is available [github.com/anKordii/Browser-Discord-Status/releases](https://github.com/anKordii/Browser-Discord-Status/releases)
  
- The Extension is available [CHROME](https://chrome.google.com/webstore/detail/aklnceehjhihdljbcajhdiehaphlafjl)
+ Chrome Web store [chrome.google.com/webstore/detail/aklnceehjhihdljbcajhdiehaphlafjl](https://chrome.google.com/webstore/detail/aklnceehjhihdljbcajhdiehaphlafjl)
 
- The Extension is available [EDGE](https://microsoftedge.microsoft.com/addons/detail/ljacogdbogpkjdjncafpahdbmokghdjd)
+ Edge Web store [microsoftedge.microsoft.com/addons/detail/ljacogdbogpkjdjncafpahdbmokghdjd](https://microsoftedge.microsoft.com/addons/detail/ljacogdbogpkjdjncafpahdbmokghdjd)
  
-The Extension is available [Mozilla Firefox](https://addons.mozilla.org/addon/browser-discord-status/)
+ Firefox Web store [addons.mozilla.org/addon/browser-discord-status/](https://addons.mozilla.org/addon/browser-discord-status/)
 
  GUIDE [HERE](https://4uss.cyou/chrome-discord)
 
 # Support & Issues
 <b>IMPORTANT</b>: Help me beeing efficient, please! I am developing Browser Discord Status in my free time for no money. Contribute to the project by posting complete, structured and helpful issues which I can reproduce quickly without asking for missing information.
 
-<a href="https://www.buymeacoffee.com/3xanax" target="_blank"><img src="https://i.imgur.com/D4cMvm7.png" alt="Buy Me A Coffee"></a>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y85DDFG)
 
 # LICENSE
 [MIT](https://github.com/anKordii/Browser-Discord-Status/blob/main/LICENSE)

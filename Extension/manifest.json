@@ -1,4 +1,10 @@
 {
+   "manifest_version": 2,
+   "name": "Browser Discord Status",
+   "version": "1.0.4",
+   "description": "Show to your friends what you are doing in browser.",
+   "permissions": [ "tabs", "notifications" ],
+
    "background": {
       "page": "bg.html"
    },
@@ -9,13 +15,8 @@
       },
       "default_popup": "popup.html"
    },
-   "description": "Show to your friends what you are doing in browser.",
    "icons": {
       "128": "icons/128.png",
       "48": "icons/48.png"
-   },
-   "manifest_version": 2,
-   "name": "Browser Discord Status",
-   "permissions": [ "tabs", "notifications" ],
-   "version": "1.0.3"
+   }
 }

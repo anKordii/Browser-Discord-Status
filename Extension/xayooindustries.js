@@ -12,13 +12,13 @@ chrome.browserAction.setBadgeBackgroundColor({ color: "#b30b2f" }); chrome.brows
 
 socket.on('connect', function(){
     alercik('Connected to the server');
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#006b1e" })
-    chrome.browserAction.setBadgeText({ text: "ON" })
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#00b01d" })
+    chrome.browserAction.setBadgeText({ text: " " })
 });
 socket.on('disconnect', function () {
     alercik('Server connection lost');
     chrome.browserAction.setBadgeBackgroundColor({ color: "#b30b2f" })
-    chrome.browserAction.setBadgeText({ text: "OFF" })
+    chrome.browserAction.setBadgeText({ text: " " })
 });
 socket.on("currentData", function(){
 
@@ -33,9 +33,11 @@ chrome.tabs.onActivated.addListener( function(activeInfo){
     chrome.tabs.get(activeInfo.tabId, function(tab){
         y = tab.url;
 
-        if (!y || ['chrome://', 'about://', 'edge://'].some(p => y.startsWith(p))) return;
+        if (!y || ['chrome://', 'about://', 'edge://', 'about:'].some(p => y.startsWith(p))) return;
         if (!y || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => y.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
         if (!y || ['https://www.bing.com', 'https://bing.com', 'http://www.bing.com', 'http://bing.com'].some(p => y.startsWith(p) && localStorage.getItem(`disableBing`) === 'true')) return;
+
+        
         socket.emit("ussDiscordActive", {
             url: y,
             title: tab.title,
@@ -47,7 +49,7 @@ chrome.tabs.onActivated.addListener( function(activeInfo){
 
 chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
 
-    if (!change.url || ['chrome://', 'about://', 'edge://'].some(p => change.url.startsWith(p))) return;
+    if (!change.url || ['chrome://', 'about://', 'edge://', 'about:'].some(p => change.url.startsWith(p))) return;
     if (!change.url || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => change.url.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
     if (!change.url || ['https://www.bing.com', 'https://bing.com', 'http://www.bing.com', 'http://bing.com'].some(p => change.url.startsWith(p) && localStorage.getItem(`disableBing`) === 'true')) return;
 
@@ -61,10 +63,11 @@ chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
     }
 });
 
+
 function currentPageData(){
     chrome.tabs.getSelected(null, function(tab) {
 
-        if (!tab.url || ['chrome://', 'about://', 'edge://'].some(p => tab.url.startsWith(p))) return;
+        if (!tab.url || ['chrome://', 'about://', 'edge://', 'about:'].some(p => tab.url.startsWith(p))) return;
         if (!tab.url || ['https://www.google.com', 'https://google.com', 'http://www.google.com', 'http://google.com'].some(p => tab.url.startsWith(p) && localStorage.getItem(`disableGoogle`) === 'true')) return;
         if (!tab.url || ['https://www.bing.com', 'https://bing.com', 'http://www.bing.com', 'http://bing.com'].some(p => tab.url.startsWith(p) && localStorage.getItem(`disableBing`) === 'true')) return;
 
