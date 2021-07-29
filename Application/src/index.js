@@ -69,16 +69,16 @@ const createWindow = () => {
     let appIcon = new Tray(path.join(__dirname, "assets/img/ico.ico"));
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: 'Browser Discord Status',
+            label: 'Discord Server',
             enabled: false
         },
         {
-            label: 'Application', click: function () {
+            label: 'Home', click: function () {
                 mainWindow.show();
             }
         },
         {
-            label: 'Quit App', click: function () {
+            label: 'Close', click: function () {
                 app.isQuiting = true;
                 app.quit();
             }
@@ -94,7 +94,7 @@ const createWindow = () => {
   }
 
   function checkisoutdated(){
-    const req = https.request({hostname: 'api.4uss.cyou', port: 443, path: `/extension/version.json`,method: 'GET'}, res => {
+    const req = https.request({hostname: 'api.beyondlabs.pl', port: 443, path: `/discord.json`,method: 'GET'}, res => {
   
       res.on('data', d => {
         var data = JSON.parse(d)
@@ -133,7 +133,7 @@ discord.updatePresence({
   largeImageText: 'Idle',
   instance: true,
   buttons: [
-    { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+    { label: 'Download', url: 'https://chrome.google.com/webstore/detail/browser-discord-status/aklnceehjhihdljbcajhdiehaphlafjl'}
   ]
 })
 
@@ -141,13 +141,21 @@ io.on('connection', function (socket) {
   /* Przyjmowanie*/
   socket.on('ussDiscordActive', (data) => {
 
-    chromeStatusRPC(data.url, data.title, data.notSuppoerted)
+    if(data.title === data.url){
+      socket.emit('currentData');
+    }else{
+      chromeStatusRPC(data.url, data.title, data.notSuppoerted)
+    }
   
   });
 
   socket.on('ussDiscordUpdate', (data) => {
 
-    chromeStatusRPC(data.url, data.title, data.notSuppoerted)
+    if(data.title === data.url){
+      socket.emit('currentData');
+    }else{
+      chromeStatusRPC(data.url, data.title, data.notSuppoerted)
+    }
   
   });
 
@@ -157,7 +165,7 @@ io.on('connection', function (socket) {
 
   });
 
-  setInterval(() => {socket.emit('currentData');}, 30 * 1000);
+  setInterval(() => {socket.emit('currentData');}, 5 * 1000);
 
 });
 
@@ -192,7 +200,7 @@ function chromeStatusRPC(url, title, notSuppoerted){
           largeImageText: ussModificatedU,
           instance: true,
           buttons: [
-            { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+            { label: 'Download', url: 'https://chrome.google.com/webstore/detail/browser-discord-status/aklnceehjhihdljbcajhdiehaphlafjl'}
           ]
         })
       }
@@ -216,7 +224,7 @@ function specialChromeStatusRPC(title, name, image, buttonS, urlS){
       instance: true,
       buttons: [
         { label: buttonS, url: urlS.replace(/\?.*$/g,"")},
-        { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+        { label: 'Download', url: 'https://chrome.google.com/webstore/detail/browser-discord-status/aklnceehjhihdljbcajhdiehaphlafjl'}
       ]
     });
   }else{
@@ -229,7 +237,7 @@ function specialChromeStatusRPC(title, name, image, buttonS, urlS){
       instance: true,
       buttons: [
         { label: buttonS, url: urlS},
-        { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+        { label: 'Download', url: 'https://chrome.google.com/webstore/detail/browser-discord-status/aklnceehjhihdljbcajhdiehaphlafjl'}
       ]
     });
   }
@@ -243,7 +251,7 @@ function customChromeStatusRPC(title, name, image){
       largeImageText: name,
       instance: true,
       buttons: [
-        { label: 'Download', url: 'https://4uss.cyou/chrome-discord'}
+        { label: 'Download', url: 'https://chrome.google.com/webstore/detail/browser-discord-status/aklnceehjhihdljbcajhdiehaphlafjl'}
       ]
     });
 }
