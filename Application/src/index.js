@@ -180,7 +180,7 @@ function chromeStatusRPC(url, title, notSuppoerted){
   lastTitle = ussModificated;
   lastUrl = ussModificatedU;
 
-  const req = https.request({hostname: 'api.4uss.cyou', port: 443, path: `/usslist.php?url=${chars[2]}`,method: 'GET'}, res => {
+  const req = https.request({hostname: 'api.beyondlabs.pl', port: 443, path: `/v1/discord/check.php?url=${chars[2]}`,method: 'GET'}, res => {
   
     res.on('data', d => {
       var data = JSON.parse(d);
